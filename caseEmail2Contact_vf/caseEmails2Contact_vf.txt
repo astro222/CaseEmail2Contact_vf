@@ -1,0 +1,20 @@
+<apex:page standardController="Contact" extensions="caseEmailController">
+    <apex:form >
+        <apex:pageBlock >
+        	<apex:pageBlockTable value="{!emailCases}" var="ec" rendered="{!(emailCases.size>0)}"> 
+                <apex:column headerValue="Case Number" value="{!ec.Parent.CaseNumber}"></apex:column>
+                <apex:column headerValue="Status" value="{!ec.Status}"></apex:column>
+                <apex:column headerValue="Subject">
+                    <apex:outputLink target="_blank" value="/{!ec.Id}">{!ec.Subject}
+                    </apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="Created Date" value="{!ec.CreatedDate}"></apex:column>
+            </apex:pageBlockTable>
+            <br/>
+            <apex:outputLink rendered="{!(emailCases.size>=5)}" target="_blank" value="/apex/caseEmails2Contact?id={!Contact.Id}&complete=true" > 
+                See All Case Emails </apex:outputLink>
+            <apex:outputText rendered="{!(emailCases.size=0)}" > 
+                No Case Emails to Display </apex:outputText>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

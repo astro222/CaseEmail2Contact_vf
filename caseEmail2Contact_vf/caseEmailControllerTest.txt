@@ -1,0 +1,170 @@
+/**
+ * This is a unit test for caseEmailController 
+ * Test CaseEmails2Contact visualforce page
+ * on Case Email list >0<5, >5, or null
+ */ 
+
+@isTest
+private class caseEmailControllerTest {
+    static testmethod void caseEmailController() { 
+        Account a = new Account(
+        	Name = 'test');
+ 		insert a;
+        
+        Contact c = new Contact();
+        c.FirstName  = 'test1';
+        c.LastName = 'test2';
+        c.Email = 'test@test.com';
+        c.AccountId = a.Id;
+        insert c;
+        
+        Case ca = new Case();
+        ca.Status = 'New';
+        ca.AccountId = a.Id;
+        ca.ContactId = c.Id;
+        insert ca;
+        
+        EmailMessage em = new EmailMessage();
+        em.Subject = 'test';
+        //em.Status = 'new';
+        em.FromAddress = 'test@test.com';
+        em.ToAddress = 'test2@test.com';
+        em.ParentId = ca.Id;
+        insert em;
+        
+        ApexPages.StandardController std = new ApexPages.StandardController(c);
+        caseEmailController testcontroller= new caseEmailController(std);
+        System.assertEquals(1, testController.emailCases.size());  
+        System.assertEquals(null, testController.showCompleteList);
+    }
+    
+    static testmethod void caseEmailController2() { 
+        Account a = new Account(
+        	Name = 'test');
+ 		insert a;
+        
+        Contact c = new Contact();
+        c.FirstName  = 'test1';
+        c.LastName = 'test2';
+        c.Email = 'test@test.com';
+        c.AccountId = a.Id;
+        insert c;
+        
+        Case ca = new Case();
+        ca.Status = 'New';
+        ca.AccountId = a.Id;
+        ca.ContactId = c.Id;
+        insert ca;
+        
+        EmailMessage em = new EmailMessage();
+        em.Subject = 'test';
+        //em.Status = 'new';
+        em.FromAddress = 'test@test.com';
+        em.ToAddress = 'test2@test.com';
+        em.ParentId = ca.Id;
+        insert em;
+        
+        ApexPages.currentPage().getParameters().put('complete','true');
+        ApexPages.StandardController std = new ApexPages.StandardController(c);
+        caseEmailController testcontroller= new caseEmailController(std);
+        System.assertEquals(1, testController.emailCases.size());  
+        System.assertNotEquals(null, testController.showCompleteList);
+    }
+    
+        static testmethod void caseEmailController3() { 
+        Account a = new Account(
+        	Name = 'test');
+ 		insert a;
+        
+        Contact c = new Contact();
+        c.FirstName  = 'test1';
+        c.LastName = 'test2';
+        c.Email = 'test@test.com';
+        c.AccountId = a.Id;
+        insert c;
+        
+        Case ca = new Case();
+        ca.Status = 'New';
+        ca.AccountId = a.Id;
+        ca.ContactId = c.Id;
+        insert ca;
+        
+        ApexPages.currentPage().getParameters().put('complete','true');
+        ApexPages.StandardController std = new ApexPages.StandardController(c);
+        caseEmailController testcontroller= new caseEmailController(std);
+        System.assertEquals(0, testController.emailCases.size());  
+    }
+    
+        static testmethod void caseEmailController4() { 
+        Account a = new Account(
+        	Name = 'test');
+ 		insert a;
+        
+        Contact c = new Contact();
+        c.FirstName  = 'test1';
+        c.LastName = 'test2';
+        c.Email = 'test@test.com';
+        c.AccountId = a.Id;
+        insert c;
+        
+        Case ca = new Case();
+        ca.Status = 'New';
+        ca.AccountId = a.Id;
+        ca.ContactId = c.Id;
+        insert ca;
+        
+        EmailMessage em = new EmailMessage();
+        em.Subject = 'test1';
+        //em.Status = 'new';
+        em.FromAddress = 'test@test.com';
+        em.ToAddress = 'test2@test.com';
+        em.ParentId = ca.Id;
+        insert em;
+            
+        EmailMessage em2 = new EmailMessage();
+        em2.Subject = 'test2';
+        //em.Status = 'new';
+        em2.FromAddress = 'test@test.com';
+        em2.ToAddress = 'test2@test.com';
+        em2.ParentId = ca.Id;
+        insert em2;
+            
+        EmailMessage em3 = new EmailMessage();
+        em3.Subject = 'test3';
+        //em.Status = 'new';
+        em3.FromAddress = 'test@test.com';
+        em3.ToAddress = 'test2@test.com';
+        em3.ParentId = ca.Id;
+        insert em3;
+            
+        EmailMessage em4 = new EmailMessage();
+        em4.Subject = 'test4';
+        //em.Status = 'new';
+        em4.FromAddress = 'test@test.com';
+        em4.ToAddress = 'test2@test.com';
+        em4.ParentId = ca.Id;
+        insert em4;
+            
+        EmailMessage em5 = new EmailMessage();
+        em5.Subject = 'test5';
+        //em.Status = 'new';
+        em5.FromAddress = 'test@test.com';
+        em5.ToAddress = 'test2@test.com';
+        em5.ParentId = ca.Id;
+        insert em5;
+            
+        EmailMessage em6 = new EmailMessage();
+        em6.Subject = 'test6';
+        //em.Status = 'new';
+        em6.FromAddress = 'test@test.com';
+        em6.ToAddress = 'test2@test.com';
+        em6.ParentId = ca.Id;
+        insert em6;
+        
+        ApexPages.currentPage().getParameters().put('complete','true');
+        ApexPages.StandardController std = new ApexPages.StandardController(c);
+        caseEmailController testcontroller= new caseEmailController(std);
+        System.assertEquals(6, testController.emailCases.size());  
+        System.assertNotEquals(null, testController.showCompleteList);
+    }
+}

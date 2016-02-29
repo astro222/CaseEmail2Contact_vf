@@ -1,0 +1,25 @@
+public class caseEmailController {
+    public List<EmailMessage> emailCases {get;set;}
+    public String showCompleteList {get;set;}
+    public caseEmailController (ApexPages.StandardController std){
+        emailCases = [
+            SELECT Parent.CaseNumber, Status, 
+            	Subject, CreatedDate, ParentId 
+            FROM EmailMessage 
+            WHERE Parent.ContactId = :std.getId()
+            ORDER BY CreatedDate DESC 
+        ]; 
+        if (!emailCases.isEmpty()){
+            showCompleteList = ApexPages.currentPage().getParameters().get('complete');
+        	List<EmailMessage> shortList = new List<EmailMessage> ();
+            for (Integer i=0; i<5; i++){
+                if (emailCases.size() > i){
+                	shortList.add(emailCases[i]);    
+                }
+        	}
+            if (String.isEmpty(showCompleteList)){
+                emailCases=shortList;
+            }              
+        }
+    }      
+}
